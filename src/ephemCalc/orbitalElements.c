@@ -43,6 +43,8 @@
 #include "orbitalElements.h"
 #include "magnitudeEstimate.h"
 
+extern char bindir[FNAME_LENGTH];
+
 // Binary files containing the orbital elements of solar system objects
 FILE *planet_database_file = NULL;
 FILE *asteroid_database_file = NULL;
@@ -96,7 +98,7 @@ int OrbitalElements_ReadBinaryData(const char *filename, FILE **file_pointer, in
     char filename_with_path[FNAME_LENGTH];
 
     // Work out the full path of the binary data file we are to read
-    sprintf(filename_with_path, "%s/../data/%s", SRCDIR, filename);
+    sprintf(filename_with_path, "%s/../data/%s", bindir, filename);
     if (DEBUG) {
         sprintf(temp_err_string, "Trying to fetch binary data from file <%s>.", filename_with_path);
         ephem_log(temp_err_string);
@@ -163,7 +165,7 @@ void OrbitalElements_DumpBinaryData(const char *filename, const orbitalElements 
     char filename_with_path[FNAME_LENGTH];
 
     // Work out the full path of the binary data file we are to write
-    sprintf(filename_with_path, "%s/../data/%s", SRCDIR, filename);
+    sprintf(filename_with_path, "%s/../data/%s", bindir, filename);
     if (DEBUG) {
         sprintf(temp_err_string, "Dumping binary data to file <%s>.", filename_with_path);
         ephem_log(temp_err_string);
@@ -246,7 +248,7 @@ void orbitalElements_planets_readAsciiData() {
         sprintf(temp_err_string, "Beginning to read ASCII planet list.");
         ephem_log(temp_err_string);
     }
-    sprintf(fname, "%s/../data/planets.dat", SRCDIR);
+    sprintf(fname, "%s/../data/planets.dat", bindir);
     if (DEBUG) {
         sprintf(temp_err_string, "Opening file <%s>", fname);
         ephem_log(temp_err_string);
@@ -339,7 +341,7 @@ void orbitalElements_planets_readAsciiData() {
 
     // Open a file pointer to the file
     char filename_with_path[FNAME_LENGTH];
-    sprintf(filename_with_path, "%s/../data/%s", SRCDIR, "dcfbinary.plt");
+    sprintf(filename_with_path, "%s/../data/%s", bindir, "dcfbinary.plt");
     planet_database_file = fopen(filename_with_path, "rb");
 }
 
@@ -397,7 +399,7 @@ void orbitalElements_asteroids_readAsciiData() {
         sprintf(temp_err_string, "Beginning to read ASCII asteroid list.");
         ephem_log(temp_err_string);
     }
-    sprintf(fname, "%s/../data/astorb.dat", SRCDIR);
+    sprintf(fname, "%s/../data/astorb.dat", bindir);
     if (DEBUG) {
         sprintf(temp_err_string, "Opening file <%s>", fname);
         ephem_log(temp_err_string);
@@ -500,7 +502,7 @@ void orbitalElements_asteroids_readAsciiData() {
 
     // Open a file pointer to the file
     char filename_with_path[FNAME_LENGTH];
-    sprintf(filename_with_path, "%s/../data/%s", SRCDIR, "dcfbinary.ast");
+    sprintf(filename_with_path, "%s/../data/%s", bindir, "dcfbinary.ast");
     asteroid_database_file = fopen(filename_with_path, "rb");
 }
 
@@ -562,7 +564,7 @@ void orbitalElements_comets_readAsciiData() {
         sprintf(temp_err_string, "Beginning to read ASCII comet list.");
         ephem_log(temp_err_string);
     }
-    sprintf(fname, "%s/../data/Soft00Cmt.txt", SRCDIR);
+    sprintf(fname, "%s/../data/Soft00Cmt.txt", bindir);
     if (DEBUG) {
         sprintf(temp_err_string, "Opening file <%s>", fname);
         ephem_log(temp_err_string);
@@ -686,7 +688,7 @@ void orbitalElements_comets_readAsciiData() {
 
     // Open a file pointer to the file
     char filename_with_path[FNAME_LENGTH];
-    sprintf(filename_with_path, "%s/../data/%s", SRCDIR, "dcfbinary.cmt");
+    sprintf(filename_with_path, "%s/../data/%s", bindir, "dcfbinary.cmt");
     comet_database_file = fopen(filename_with_path, "rb");
 }
 

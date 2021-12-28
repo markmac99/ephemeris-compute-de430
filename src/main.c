@@ -24,6 +24,7 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
+#include <libgen.h>
 
 #include <gsl/gsl_const_mksa.h>
 #include <gsl/gsl_errno.h>
@@ -45,6 +46,9 @@
 #include "listTools/ltMemory.h"
 
 #include "settings/settings.h"
+
+// path to application binary ; data files are held relative to this
+char bindir[FNAME_LENGTH];
 
 #define N_PARAMETERS 17
 static double buffer[N_PARAMETERS * MAX_OBJECTS];
@@ -209,6 +213,8 @@ void compute_ephemeris(settings *s) {
 
 int main(int argc, const char **argv) {
     settings ephemeris_settings;
+
+    snprintf(bindir, FNAME_LENGTH, "%s", dirname(argv[0]));
 
     // Initialise sub-modules
     if (DEBUG) ephem_log("Initialising ephemeris computer.");

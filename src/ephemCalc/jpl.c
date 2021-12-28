@@ -39,6 +39,8 @@
 #include "orbitalElements.h"
 #include "magnitudeEstimate.h"
 
+extern char bindir[FNAME_LENGTH];
+
 //! The number of the JPL ephemeris we are using: DE430
 static int JPL_EphemNumber = 430;
 
@@ -76,7 +78,7 @@ int JPL_ReadBinaryData() {
     char fname[FNAME_LENGTH];
 
     // Work out the filename of the binary file that we are to open
-    snprintf(fname, FNAME_LENGTH, "%s/../data/dcfbinary.%d", SRCDIR, JPL_EphemNumber);
+    snprintf(fname, FNAME_LENGTH, "%s/../data/dcfbinary.%d", bindir, JPL_EphemNumber);
     if (DEBUG) {
         snprintf(temp_err_string, FNAME_LENGTH, "Trying to fetch binary data from file <%s>.", fname);
         ephem_log(temp_err_string);
@@ -154,7 +156,7 @@ void JPL_DumpBinaryData() {
     FILE *output;
     char fname[FNAME_LENGTH];
 
-    snprintf(fname, FNAME_LENGTH, "%s/../data/dcfbinary.%d", SRCDIR, JPL_EphemNumber);
+    snprintf(fname, FNAME_LENGTH, "%s/../data/dcfbinary.%d", bindir, JPL_EphemNumber);
     if (DEBUG) {
         sprintf(temp_err_string, "Dumping binary data to file <%s>.", fname);
         ephem_log(temp_err_string);
@@ -206,7 +208,7 @@ void jpl_readAsciiData() {
     }
 
     // The header file, <data/header.430>, contains global information about the ephemeris
-    snprintf(fname, FNAME_LENGTH, "%s/../data/header.%d", SRCDIR, JPL_EphemNumber);
+    snprintf(fname, FNAME_LENGTH, "%s/../data/header.%d", bindir, JPL_EphemNumber);
 
     while (1) {
         // If we don't currently have an ephemeris file with readable data, we need to open one
@@ -236,7 +238,7 @@ void jpl_readAsciiData() {
 
             // Populate <fname> with the filename of the next ephemeris file to read
             // The ephemeris data is contained in files <data/ascp????.430>, where ???? is the start year
-            snprintf(fname, FNAME_LENGTH, "%s/../data/ascp%d.%d", SRCDIR, year, JPL_EphemNumber);
+            snprintf(fname, FNAME_LENGTH, "%s/../data/ascp%d.%d", bindir, year, JPL_EphemNumber);
         }
 
         // Read a line of data from the ephemeris file

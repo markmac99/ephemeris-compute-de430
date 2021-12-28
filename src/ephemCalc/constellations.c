@@ -42,6 +42,8 @@
 
 #include "constellations.h"
 
+extern char bindir[FNAME_LENGTH];
+
 //! constel_point - A structure representing a point on the outline of a constellation.
 
 typedef struct {
@@ -110,11 +112,13 @@ void constellations_init() {
     FILE *file;
     int i;
     char line[FNAME_LENGTH], *scan, constellation[6] = "@@@";
+    char fname[FNAME_LENGTH];
 
     Nconstel = 0;
 
     // Scan through catalogue of bound
-    file = fopen(SRCDIR "../constellations/bound_20.dat", "r");
+    snprintf(fname, FNAME_LENGTH, "%s/../constellations/bound_20.dat", bindir);
+    file = fopen(fname, "r");
     if (file == NULL) ephem_fatal(__FILE__, __LINE__, "Could not open constellation boundary data");
 
     while ((!feof(file)) && (!ferror(file))) {
@@ -148,7 +152,8 @@ void constellations_init() {
     fclose(file);
 
     // Scan through list of full names
-    file = fopen(SRCDIR "../constellations/constellation_names.dat", "r");
+    snprintf(fname, FNAME_LENGTH, "%s/../constellations/constellation_names.dat", bindir);
+    file = fopen(fname, "r");
     if (file == NULL) ephem_fatal(__FILE__, __LINE__, "Could not open constellation name data");
 
     while ((!feof(file)) && (!ferror(file))) {

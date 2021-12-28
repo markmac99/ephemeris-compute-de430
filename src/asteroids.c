@@ -32,6 +32,7 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
+#include <libgen.h>
 
 #include <gsl/gsl_const_mksa.h>
 #include <gsl/gsl_errno.h>
@@ -53,6 +54,9 @@
 #include "settings/settings.h"
 
 #define N_INPUTS 7
+
+// location of binary ; all data files held in locations relative to this
+char bindir[FNAME_LENGTH];
 
 void file_event(int report, int i, const char *name, char *type, double JD, double mag, double earth_dist,
                 double ra, double dec) {
@@ -190,6 +194,7 @@ int main(int argc, char **argv) {
 
     // Initialise sub-modules
     if (DEBUG) ephem_log("Initialising asteroid opposition search.");
+    snprintf(bindir, FNAME_LENGTH, "%s", basename(argv[0]));
     lt_memoryInit(&ephem_error, &ephem_log);
     constellations_init();
 
